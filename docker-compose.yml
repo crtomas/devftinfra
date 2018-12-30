@@ -1,0 +1,63 @@
+version: '3.1'
+
+services:
+    my-registry:
+      image: registry:2.6.2
+      volumes:
+        - registry:/var/lib/registry
+      ports:
+        - "55000:5000"
+      restart: unless-stopped  
+
+    teamcity:
+        #image: jetbrains/teamcity-server:2018.1.1
+        image: jetbrains/teamcity-server:2018.1.5
+        volumes:
+            - teamcity-server-datadir:/data/teamcity_server/datadir
+            - teamcity-server-logs:/opt/teamcity/logs
+        ports:
+            - 8111:8111
+    teamcity-agent:
+        #image: aspnetcore/teamcity-agent-with-compose:2018.1.1
+        image: jetbrains/teamcity-agent:2018.1.5
+        #build: ./agent
+        environment:
+            SERVER_URL: http://teamcity:8111
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+
+volumes:
+    teamcity-server-datadir:
+    teamcity-server-logs:
+    registry:
+
+#TEAMCITY BUILD STEP
+#Command Line Build Step
+#image="192.168.99.100:55000/primesapi:ci-%build.number%"
+#docker build -t $image .
+#docker push $image	
+
+
+#http://192.168.99.100:8111 Teamcity
+#Corrupted => remove volumes  
+#docker volume ls
+#docker volume rm teamcity-server-datadir
+#docker volume rm teamcity-server-logs
+
+#http://192.168.99.100:55000/v2/_catalog 
+#http://192.168.99.100:55000/v2/primeapi/tags/list
+#docker info 
+
+#docker-machine ssh
+#sudo vi /var/lib/boot2docker/profile
+#To enter vi, type: vi filename <Return>
+#To enter insert mode, type: i.
+#Type in the text: This is easy.
+#To leave insert mode and return to command mode, press: <Esc>
+#In command mode, save changes and exit vi by typing: :wq <Return>
+
+#Add this line to the EXTRA_ARGS var:
+#--insecure-registry=192.168.99.100:55000
+#exit
+#docker-machine restart
