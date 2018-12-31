@@ -1,6 +1,10 @@
 #!/bin/bash
 
 #Install Docker Toolbox without Virtualbox and with git
+#Virtualbox
+#RAM 12GB
+#2 CPU
+
 
 machine=default
 disk_size=50000
