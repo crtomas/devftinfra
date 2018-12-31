@@ -10,17 +10,14 @@ services:
       restart: unless-stopped  
 
     teamcity:
-        #image: jetbrains/teamcity-server:2018.1.1
-        image: jetbrains/teamcity-server:2018.1.5
+        image: jetbrains/teamcity-server:2018.2.1
         volumes:
             - teamcity-server-datadir:/data/teamcity_server/datadir
             - teamcity-server-logs:/opt/teamcity/logs
         ports:
             - 8111:8111
     teamcity-agent:
-        #image: aspnetcore/teamcity-agent-with-compose:2018.1.1
-        image: jetbrains/teamcity-agent:2018.1.5
-        #build: ./agent
+        image: jetbrains/teamcity-agent:2018.2.1
         environment:
             SERVER_URL: http://teamcity:8111
         volumes:
