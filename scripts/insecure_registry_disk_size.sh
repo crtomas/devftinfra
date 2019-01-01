@@ -5,6 +5,9 @@
 #RAM 12GB
 #2 CPU
 
+# https://docs.docker.com/machine/reference/create/#accessing-driver-specific-flags-in-the-help-text
+# --virtualbox-cpu-count "2" 
+# --virtualbox-memory "1024"
 
 machine=default
 disk_size=50000
