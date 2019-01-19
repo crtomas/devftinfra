@@ -1,0 +1,3 @@
+docker service ls
+docker service rm <name>
+docker service scale ftnginx=5

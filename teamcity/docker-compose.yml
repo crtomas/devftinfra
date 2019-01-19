@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+    teamcity:
+        #image: jetbrains/teamcity-server:2018.1.1
+        image: jetbrains/teamcity-server:2018.1.5
+        volumes:
+            - teamcity-server-datadir:/data/teamcity_server/datadir
+            - teamcity-server-logs:/opt/teamcity/logs
+        ports:
+            - 8111:8111
+    teamcity-agent:
+        #image: aspnetcore/teamcity-agent-with-compose:2018.1.1
+        image: jetbrains/teamcity-agent:2018.1.5
+        #build: ./agent
+        environment:
+            SERVER_URL: http://teamcity:8111
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+
+
+volumes:
+    teamcity-server-datadir:
+    teamcity-server-logs:
+
+#TEAMCITY BUILD STEP
+#Command Line Build Step
+#image="192.168.99.100:55000/primesapi:ci-%build.number%"
+#docker build -t $image .
+#docker push $image	
+
+
+#http://192.168.99.100:8111
+#Corrupted => remove volumes  
+#docker volume ls
+#docker volume rm teamcity-server-datadir
+#docker volume rm teamcity-server-logs

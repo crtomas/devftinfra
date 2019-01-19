@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  my-registry:
+    image: portainer/portainer:1.20.0
+    volumes:
+      - portainer_data:/data portainer/portainer
+      - /var/run/docker.sock:/var/run/docker.sock      
+    ports:
+      - "9000:9000"
+    restart: unless-stopped  
+
+volumes:
+  registry:
+  portainer_data:
+  
+#http://192.168.99.100:55000/v2/_catalog 
+
